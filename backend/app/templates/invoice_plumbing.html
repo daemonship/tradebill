@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Invoice #{invoice_number}</title>
+    <style>
+        /* Reset and base styles */
+        * {{
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Helvetica Neue', Arial, sans-serif;
+        }}
+
+        body {{
+            padding: 40px;
+            color: #333;
+            background-color: #fff;
+            font-size: 14px;
+            line-height: 1.5;
+        }}
+
+        .invoice-container {{
+            max-width: 800px;
+            margin: 0 auto;
+        }}
+
+        /* Header */
+        .header {{
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid #0d9488; /* Plumbing accent color */
+        }}
+
+        .business-info h1 {{
+            font-size: 28px;
+            color: #0d9488;
+            margin-bottom: 8px;
+        }}
+
+        .business-info p {{
+            margin: 4px 0;
+            color: #555;
+        }}
+
+        .invoice-meta {{
+            text-align: right;
+        }}
+
+        .invoice-meta h2 {{
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 10px;
+        }}
+
+        .invoice-meta p {{
+            margin: 4px 0;
+            color: #666;
+        }}
+
+        /* Client and job info */
+        .client-section {{
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-bottom: 40px;
+            background: #f9fafb;
+            padding: 20px;
+            border-radius: 8px;
+        }}
+
+        .info-box h3 {{
+            font-size: 16px;
+            color: #0d9488;
+            margin-bottom: 10px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }}
+
+        .info-box p {{
+            margin: 6px 0;
+            color: #444;
+        }}
+
+        /* Line items tables */
+        .table-section {{
+            margin-bottom: 30px;
+        }}
+
+        .table-title {{
+            font-size: 18px;
+            color: #0d9488;
+            margin-bottom: 15px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid #e5e7eb;
+        }}
+
+        table {{
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }}
+
+        thead {{
+            background-color: #f3f4f6;
+        }}
+
+        th {{
+            padding: 12px 16px;
+            text-align: left;
+            font-weight: 600;
+            color: #374151;
+            border-bottom: 2px solid #d1d5db;
+        }}
+
+        td {{
+            padding: 12px 16px;
+            border-bottom: 1px solid #e5e7eb;
+            vertical-align: top;
+        }}
+
+        tbody tr:hover {{
+            background-color: #f9fafb;
+        }}
+
+        .text-right {{
+            text-align: right;
+        }}
+
+        .total-row td {{
+            font-weight: bold;
+            border-bottom: none;
+            padding-top: 20px;
+        }}
+
+        /* Totals section */
+        .totals-section {{
+            margin-left: auto;
+            width: 300px;
+            margin-bottom: 40px;
+        }}
+
+        .totals-table {{
+            width: 100%;
+        }}
+
+        .totals-table td {{
+            padding: 10px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }}
+
+        .totals-table .label {{
+            text-align: right;
+            padding-right: 20px;
+            color: #666;
+        }}
+
+        .totals-table .amount {{
+            text-align: right;
+            font-weight: 600;
+            color: #333;
+        }}
+
+        .grand-total td {{
+            font-size: 20px;
+            font-weight: bold;
+            color: #0d9488;
+            border-top: 2px solid #0d9488;
+            padding-top: 15px;
+        }}
+
+        /* Compliance notes */
+        .compliance-section {{
+            margin-top: 50px;
+            padding: 20px;
+            background-color: #f0f9ff;
+            border-left: 4px solid #0d9488;
+            border-radius: 0 8px 8px 0;
+        }}
+
+        .compliance-section h3 {{
+            color: #0d9488;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }}
+
+        .compliance-section p {{
+            color: #374151;
+            line-height: 1.6;
+        }}
+
+        /* Footer watermark */
+        .footer {{
+            margin-top: 60px;
+            text-align: center;
+            color: #9ca3af;
+            font-size: 12px;
+            padding-top: 20px;
+            border-top: 1px solid #e5e7eb;
+        }}
+
+        .watermark {{
+            opacity: 0.5;
+        }}
+    </style>
+</head>
+<body>
+    <div class="invoice-container">
+        <!-- Header -->
+        <div class="header">
+            <div class="business-info">
+                <h1>{business_name}</h1>
+                <p>{business_phone}</p>
+                <p>{business_email}</p>
+                <p>License: {business_license}</p>
+            </div>
+            <div class="invoice-meta">
+                <h2>INVOICE</h2>
+                <p><strong>Invoice #:</strong> {invoice_number}</p>
+                <p><strong>Date:</strong> {invoice_date}</p>
+                <p><strong>Trade:</strong> {trade_type}</p>
+            </div>
+        </div>
+
+        <!-- Client and job info -->
+        <div class="client-section">
+            <div class="info-box">
+                <h3>Client Information</h3>
+                <p><strong>Name:</strong> {client_name}</p>
+                <p><strong>Email:</strong> {client_email}</p>
+            </div>
+            <div class="info-box">
+                <h3>Job Address</h3>
+                <p>{job_address}</p>
+            </div>
+        </div>
+
+        <!-- Parts Table -->
+        <div class="table-section">
+            <h3 class="table-title">Parts</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th class="text-right">Quantity</th>
+                        <th class="text-right">Unit Price</th>
+                        <th class="text-right">Line Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {parts_rows}
+                </tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td colspan="3" class="text-right"><strong>Subtotal (Parts):</strong></td>
+                        <td class="text-right"><strong>{subtotal_parts}</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Labor Table -->
+        <div class="table-section">
+            <h3 class="table-title">Labor</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Description</th>
+                        <th class="text-right">Hours</th>
+                        <th class="text-right">Rate</th>
+                        <th class="text-right">Line Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {labor_rows}
+                </tbody>
+                <tfoot>
+                    <tr class="total-row">
+                        <td colspan="3" class="text-right"><strong>Subtotal (Labor):</strong></td>
+                        <td class="text-right"><strong>{subtotal_labor}</strong></td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+
+        <!-- Totals -->
+        <div class="totals-section">
+            <table class="totals-table">
+                <tr>
+                    <td class="label">Subtotal:</td>
+                    <td class="amount">{subtotal}</td>
+                </tr>
+                <tr>
+                    <td class="label">Tax ({tax_rate}%):</td>
+                    <td class="amount">{tax_amount}</td>
+                </tr>
+                <tr class="grand-total">
+                    <td class="label">Total Due:</td>
+                    <td class="amount">{total}</td>
+                </tr>
+            </table>
+        </div>
+
+        <!-- Compliance Notes -->
+        <div class="compliance-section">
+            <h3>Compliance Notes</h3>
+            <p>{compliance_notes}</p>
+        </div>
+
+        <!-- Footer Watermark -->
+        <div class="footer">
+            <p class="watermark">Created with Invoice Designer</p>
+        </div>
+    </div>
+</body>
+</html>
